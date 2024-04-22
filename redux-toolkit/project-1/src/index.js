@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import "./index.scss";
 import store from "./store/store";
-import { addTodo, fetchTodos } from "./store/todoSlice";
+import { addTodo, fetchTodos, removeTodo } from "./store/todoSlice";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,7 +29,15 @@ function App() {
       </form>
       <ul>
         {todos.map((t) => (
-          <li key={t.id}>{t.name}</li>
+          <li
+            key={t.id}
+            style={t.deleted ? { color: "red" } : {}}
+            onClick={() => {
+              dispatch(removeTodo(t.id));
+            }}
+          >
+            {t.name}
+          </li>
         ))}
       </ul>
     </>
